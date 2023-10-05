@@ -1,0 +1,200 @@
+openapi: "3.0.2"
+info:
+  title: pokemon-service
+  version: "1.0"
+paths:
+  /api/pokemon-service/search-pokemon:
+    get:
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Pokemon matching the search query
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PokemonServiceSearchPokemonResponse"
+        default:
+          description: Service Error
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ServiceError"
+  /api/pokemon-service/favourites:
+    get:
+      responses:
+        200:
+          description: List of favourite pokemons
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PokemonServiceListFavouritesResponse"
+        default:
+          description: Service Error
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ServiceError"
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/PokemonServiceCreateFavouriteRequest"
+      responses:
+        201:
+          description: The created favourite pokemon
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PokemonServiceCreateFavouriteResponse"
+        default:
+          description: Service Error
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ServiceError"
+components:
+  schemas:
+    ServiceError:
+      type: object
+      properties:
+        message:
+          type: string
+        requestStatus:
+          type: object
+          $ref: "#/components/schemas/RequestStatusFailure"
+      required:
+        - message
+        - requestStatus
+    PokemonServiceCreateFavouriteRequest:
+      type: object
+      $ref: "#/components/schemas/PokemonServiceSearchPokemonResult"
+    PokemonServiceCreateFavouriteResponse:
+      type: object
+      properties:
+        requestStatus:
+          type: object
+          $ref: "#/components/schemas/RequestStatusSuccess"
+        favourite:
+          type: object
+          $ref: "#/components/schemas/Favourite"
+      required:
+        - favourite
+        - requestStatus
+    PokemonServiceListFavouritesResponse:
+      type: object
+      properties:
+        requestStatus:
+          type: object
+          $ref: "#/components/schemas/RequestStatusSuccess"
+        favourites:
+          type: array
+          items:
+            $ref: "#/components/schemas/Favourite"
+      required:
+        - favourites
+        - requestStatus
+    PokemonServiceSearchPokemonResponse:
+      type: object
+      properties:
+        requestStatus:
+          type: object
+          $ref: "#/components/schemas/RequestStatusSuccess"
+        pokemon:
+          type: object
+          $ref: "#/components/schemas/PokemonServiceSearchPokemonResult"
+      required:
+        - pokemon
+        - requestStatus
+    PokemonServiceSearchPokemonResult:
+      type: object
+      properties:
+        attack:
+          type: integer
+        defence:
+          type: integer
+        hitPoints:
+          type: integer
+        id:
+          type: integer
+        imageFemaleBackUrl:
+          type: string
+        imageFemaleFrontUrl:
+          type: string
+        imageDefaultBackUrl:
+          type: string
+        imageDefaultFrontUrl:
+          type: string
+        name:
+          type: string
+        speed:
+          type: integer
+        type:
+          type: object
+          $ref: "#/components/schemas/PokemonTypeLiteralUnion"
+      required:
+        - attack
+        - defence
+        - hitPoints
+        - id
+        - imageDefaultBackUrl
+        - imageDefaultFrontUrl
+        - name
+        - speed
+        - type
+    Favourite:
+      type: object
+      properties:
+        id:
+          type: string
+        pokemon:
+          type: object
+          $ref: "#/components/schemas/PokemonServiceSearchPokemonResult"
+        userId:
+          type: string
+      required:
+        - id
+        - pokemon
+        - userId
+    PokemonTypeLiteralUnion:
+      type: string
+      enum:
+        - bug
+        - dark
+        - dragon
+        - electric
+        - fairy
+        - fighting
+        - fire
+        - flying
+        - ghost
+        - grass
+        - ground
+        - ice
+        - normal
+        - poison
+        - psychic
+        - rock
+        - steel
+        - water
+    RequestStatusFailure:
+      type: string
+      enum:
+        - Failure
+    RequestStatusSuccess:
+      type: string
+      enum:
+        - Success
