@@ -1,4 +1,4 @@
-import { PokemonServiceOpenapi } from "../openapi";
+import { PokemonServiceOpenapi } from '../openapi';
 
-export type PokemonServicePokemonTypeLiteralUnion =
-  PokemonServiceOpenapi.components["schemas"]["PokemonTypeLiteralUnion"];
+export type PokemonServicePokemonTypeLiteralUnionType =
+  PokemonServiceOpenapi.components['schemas']['PokemonTypeLiteralUnion'];

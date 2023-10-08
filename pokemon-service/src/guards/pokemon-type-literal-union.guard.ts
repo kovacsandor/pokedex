@@ -1,6 +1,6 @@
-import { PokemonServicePokemonTypeLiteralUnion } from 'shared/src/types';
+import { PokemonServicePokemonTypeLiteralUnionType } from 'shared/src/types';
 
-export const PokemonTypeLiteralUnionGuard = (value: string): value is PokemonServicePokemonTypeLiteralUnion => {
+export const PokemonTypeLiteralUnionGuard = (value: string): value is PokemonServicePokemonTypeLiteralUnionType => {
   switch (value) {
     case 'bug':
     case 'dark':

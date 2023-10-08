@@ -2,6 +2,7 @@ export * from './pokemon-service-create-favourite-method.type';
 export * from './pokemon-service-create-favourite-path.type';
 export * from './pokemon-service-create-favourite-request.type';
 export * from './pokemon-service-create-favourite-response.type';
+export * from './pokemon-service-favourite.type';
 export * from './pokemon-service-list-favourites-method.type';
 export * from './pokemon-service-list-favourites-path.type';
 export * from './pokemon-service-list-favourites-response.type';
